@@ -1,0 +1,4 @@
+config/ca.*
+config/nip/server.crt
+config/nip/server.csr
+config/nip/server.key

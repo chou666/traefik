@@ -1,0 +1,25 @@
+defaultEntryPoints = ["http", "https"]
+
+[entryPoints]
+  [entryPoints.http]
+    address = ":80"
+    compress = true
+        # [entryPoints.http.redirect]
+        # entryPoint = "https"
+
+  [entryPoints.https]
+    address = ":443"
+    compress = false
+        [entryPoints.https.tls]
+            [[entryPoints.https.tls.certificates]]
+            certFile = "/etc/traefik/nip/server.crt"
+            keyFile = "/etc/traefik/nip/server.key"
+
+[api]
+    entryPoint = "traefik"
+    dashboard = true
+
+[docker]
+    watch = true
+    exposedByDefault = false
+    network = "reverse-proxy"

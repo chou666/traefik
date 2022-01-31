@@ -1,0 +1,32 @@
+version: "3"
+
+services:
+  https:
+    build: .
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./traefik.toml:/traefik.toml:ro
+      - ./entrypoint.sh:/entrypoint.sh:ro
+      - ./config/:/etc/traefik/:rw
+      - /usr/share/ca-certificates/traefik/:/usr/share/ca-certificates/traefik/:rw
+    labels:
+      traefik.backend: traefik
+      traefik.port: "8080"
+      traefik.enable: "true"
+      traefik.frontend.rule: Host:traefik.127.0.0.1.nip.io
+    networks:
+      - reverse-proxy
+    restart: always
+    environment:
+      CERT_COUNTRY: FR
+      CERT_STATE: Rh
+      CERT_ORGANIZATION: freelance
+      CERT_HOST: traefik.127.0.0.1.nip.io
+
+networks:
+  reverse-proxy:
+    external:
+      name: reverse-proxy
