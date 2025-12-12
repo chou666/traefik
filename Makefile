@@ -33,5 +33,5 @@ start: stop traefik
 
 ## Stop all running traefik
 stop:
-	$(eval MY_VAR = $(shell docker ps | grep traefik | awk '{print $1}'))
+	$(eval MY_VAR = $(shell docker ps --all | grep traefik | awk '{print $1}'))
 	$(if $(strip $(MY_VAR)),docker ps --filter name=traefik* -aq | xargs docker stop | xargs docker rm,)

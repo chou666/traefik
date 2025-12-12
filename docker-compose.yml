@@ -1,17 +1,22 @@
-version: "3"
-
 services:
   https:
-    build: .
+    image: traefik:v3.6
+    #build: .
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.web.http.encodedcharacters.allowencodedslash=true"
     ports:
       - "80:80"
+      - "8080:8080"
       - "443:443"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - ./traefik.toml:/traefik.toml:ro
-      - ./entrypoint.sh:/entrypoint.sh:ro
-      - ./config/:/etc/traefik/:rw
-      - /usr/share/ca-certificates/traefik/:/usr/share/ca-certificates/traefik/:rw
+      #- ./traefik.toml:/traefik.toml:ro
+      #- ./entrypoint.sh:/entrypoint.sh:ro
+      #- ./config/:/etc/traefik/:rw
+      #- /usr/share/ca-certificates/traefik/:/usr/share/ca-certificates/traefik/:rw
     labels:
       traefik.backend: traefik
       traefik.port: "8080"
@@ -28,5 +33,5 @@ services:
 
 networks:
   reverse-proxy:
-    external:
-      name: reverse-proxy
+    name: reverse-proxy
+    external: true
