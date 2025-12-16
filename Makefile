@@ -26,7 +26,7 @@ help:
 ###############
 
 traefik:
-	docker-compose -f docker-compose.yml up -d
+	docker compose -f docker-compose.yml up -d
 
 ## Start dev environment
 start: stop traefik
