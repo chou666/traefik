@@ -5,3 +5,7 @@ This will generate ca, server certs and start traefik on [traefik.127.0.0.1.nip.
 
 ## Command
 `make start`
+
+## Monitoring
+
+https://traefik.127.0.0.1.nip.io/dashboard/
