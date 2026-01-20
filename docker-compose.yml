@@ -9,8 +9,10 @@ services:
       - "--providers.docker.exposedByDefault=false"
       # Entrypoint HTTP
       - "--entrypoints.web.address=:80"
+      - "--entrypoints.web.http.encodedCharacters.allowEncodedSlash=true"
       # Entrypoint HTTPS
       - "--entrypoints.websecure.address=:443"
+      - "--entrypoints.websecure.http.encodedCharacters.allowEncodedSlash=true"
       # Configuration TLS par défaut avec vos certificats
       - "--providers.file.directory=/etc/traefik/nip/"
       - "--providers.file.watch=true"
@@ -27,6 +29,8 @@ services:
       - "traefik.http.routers.api.service=api@internal"
       - "traefik.http.routers.api.entrypoints=web,websecure"
       - "traefik.http.routers.api.tls=true"
+    networks:
+      - reverse-proxy
 
 networks:
   reverse-proxy:
