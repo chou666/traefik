@@ -35,3 +35,12 @@ start: stop traefik
 stop:
 	$(eval MY_VAR = $(shell docker ps --all | grep traefik | awk '{print $1}'))
 	$(if $(strip $(MY_VAR)),docker ps --filter name=traefik* -aq | xargs docker stop | xargs docker rm,)
+
+###############
+# Environment #
+###############
+clean-certs:
+	rm -f config/ca.* config/nip/server.crt config/nip/server.key config/nip/server.csr
+
+rebuild: clean-certs
+	docker compose up --build

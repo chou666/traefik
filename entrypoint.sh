@@ -16,6 +16,7 @@ if [ ! -f /etc/traefik/ca.key ] || [ ! -f /etc/traefik/ca.pem ]; then
         -out /etc/traefik/ca.pem \
         -subj "/C=FR/ST=/L=/O=Developer/OU=IT/CN=localhost"
 
+    mkdir -p /usr/share/ca-certificates/traefik
     cp /etc/traefik/ca.pem /usr/share/ca-certificates/traefik/root.cert.crt
 echo done
 fi
@@ -31,7 +32,8 @@ for folder in /etc/traefik/*/; do
         -CAkey /etc/traefik/ca.key \
         -CAcreateserial \
         -out $folder/server.crt \
-        -days 3650 -sha256
+        -days 3650 -sha256 \
+        -extensions v3_req -extfile $folder/server.csr.cnf
 echo done $folder
 done
 
