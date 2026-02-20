@@ -25,11 +25,11 @@ help:
 # Environment #
 ###############
 
-traefik:
+start:
 	docker compose -f docker-compose.yml up -d
 
 ## Start dev environment
-start: stop traefik
+restart: stop start
 
 ## Stop all running traefik
 stop:
