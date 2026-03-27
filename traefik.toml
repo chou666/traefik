@@ -12,8 +12,8 @@ defaultEntryPoints = ["http", "https"]
     compress = false
         [entryPoints.https.tls]
             [[entryPoints.https.tls.certificates]]
-            certFile = "/etc/traefik/nip/server.crt"
-            keyFile = "/etc/traefik/nip/server.key"
+            certFile = "/etc/traefik/certs/local.pem"
+            keyFile = "/etc/traefik/certs/local-key.pem"
   [entryPoints.traefik]
     address = ":8080"
 

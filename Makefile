@@ -33,12 +33,17 @@ restart: stop start
 
 ## Stop all running traefik
 stop:
-	$(eval MY_VAR = $(shell docker ps --all | grep traefik | awk '{print $1}'))
-	$(if $(strip $(MY_VAR)),docker ps --filter name=traefik* -aq | xargs docker stop | xargs docker rm,)
+	docker compose down
 
 ###############
 # Environment #
 ###############
+generate-cert:
+	mkcert -install
+	mkcert "127.0.0.1.nip.io" "*.plateforme.127.0.0.1.nip.io" "*.127.0.0.1.nip.io" 127.0.0.1 localhost
+	mv 127.0.0.1.nip.io+4.pem ./config/nip/local.pem
+	mv 127.0.0.1.nip.io+4-key.pem ./config/nip/local-key.pem
+
 clean-certs:
 	rm -f config/ca.* config/nip/server.crt config/nip/server.key config/nip/server.csr
 

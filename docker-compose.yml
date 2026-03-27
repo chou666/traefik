@@ -2,7 +2,7 @@ services:
   https:
     image: traefik:v3.6.7
     restart: always
-    build: . # Utilisez build pour activer votre Dockerfile + entrypoint.sh
+    #build: . # Utilisez build pour activer votre Dockerfile + entrypoint.sh
     command:
       - "--log.level=DEBUG"
       - "--api.insecure=true"
